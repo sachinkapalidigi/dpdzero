@@ -11,20 +11,25 @@ const verifyPassword = (password, savedPassword) => {
   return bcrypt.compareSync(password, savedPassword);
 };
 
-const generateToken = (payload) => {
-  return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+const getTokenWithExpiry = (payload) => {
+  const expiresIn = process.env.JWT_EXPIRES_IN;
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn,
   });
+  return {
+    token,
+    expiresIn,
+  };
 };
 
 const verifyToken = (token) => {
-  try {
-    return jwt.verify(token, process.env.JWT_SECRET);
-  } catch (err) {
-    console.error("Token verification failed:", err.message);
-    // Handle the error appropriately, e.g., return null or throw a custom error
-    return null;
-  }
+  // Throws an error: Handle in global error handler
+  return jwt.verify(token, process.env.JWT_SECRET);
 };
 
-module.exports = { hashPassword, verifyPassword, generateToken, verifyToken };
+module.exports = {
+  hashPassword,
+  verifyPassword,
+  getTokenWithExpiry,
+  verifyToken,
+};

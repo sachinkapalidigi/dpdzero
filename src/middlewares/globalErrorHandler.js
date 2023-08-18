@@ -1,33 +1,31 @@
+const { GENERAL_RESPONSE } = require("../constants/generalResponse");
+const {
+  LOGIN_RESPONSE: { INVALID_TOKEN, TOKEN_EXPIRED },
+} = require("../constants/userResponse");
 const AppError = require("../utils/appError");
 
-const handleCastErrorDB = (error) => {
-  const message = `Invalid ${error.path}: ${error.value}`;
-  return new AppError(message, 400);
-};
-
-const handleDuplicateFieldsDB = (error) => {
-  const value = error.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
-  const message = `Duplicate field value: ${value}. Please use another value`;
-  return new AppError(message, 400);
-};
-
-const handleValidationErrorDB = (error) => {
-  const errors = Object.values(error.errors).map((el) => el.message);
-  const message = `Invalid input data. ${errors.join(". ")}`;
-  return new AppError(message, 400);
-};
-
 const handleJsonWebTokenError = () =>
-  new AppError("Invalid token, plese login again", 401);
+  new AppError(
+    INVALID_TOKEN.status,
+    INVALID_TOKEN.code,
+    INVALID_TOKEN.message,
+    401
+  );
 
 const handleTokenExpiredError = () =>
-  new AppError("Your token has expired, please login again.", 401);
+  new AppError(
+    TOKEN_EXPIRED.status,
+    TOKEN_EXPIRED.code,
+    TOKEN_EXPIRED.message,
+    401
+  );
 
 const sendErrorForDev = (err, res) => {
-  res.status(err.statusCode).json({
+  res.status(err.httpStatusCode).json({
     status: err.status,
     message: err.message,
     stack: err.stack,
+    code: err.code,
     error: err,
   });
 };
@@ -35,25 +33,24 @@ const sendErrorForDev = (err, res) => {
 const sendErrorForProd = (err, res) => {
   // Operational, trusted error: send message to client
   if (err.isOperational) {
-    res.status(err.statusCode).json({
+    res.status(err.httpStatusCode).json({
       status: err.status,
       message: err.message,
+      code: err.code,
     });
     // Programming or other unknown error: don't leak error details
   } else {
     // 1. Log error
     console.error("ERROR", err);
     // 2. Send generic error message
-    res.status(500).json({
-      status: "error",
-      message: "Something went wrong!",
-    });
+    res.status(500).json(GENERAL_RESPONSE.INTERNAL_SERVER_ERROR);
   }
 };
 
 const globalErrorHandler = (err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
+  err.httpStatusCode = err.httpStatusCode || 500;
   err.status = err.status || "error";
+  err.code = err.code || "INTERNAL_SERVER_ERROR";
   if (process.env.NODE_ENV === "development") {
     sendErrorForDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
@@ -64,10 +61,7 @@ const globalErrorHandler = (err, req, res, next) => {
       code: err.code,
       errmsg: err.errmsg,
     };
-    if (error.name === "CastError") error = handleCastErrorDB(error);
-    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === "ValidationError")
-      error = handleValidationErrorDB(error);
+    // TODO: handle db errors here
     if (error.name === "JsonWebTokenError") error = handleJsonWebTokenError();
     if (error.name === "TokenExpiredError") error = handleTokenExpiredError();
     sendErrorForProd(error, res);
