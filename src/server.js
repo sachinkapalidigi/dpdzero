@@ -16,7 +16,7 @@ process.on("uncaughtException", (err) => {
 
 // Import app
 const app = require("./app");
-const { connectToDb } = require("./config/mysqldb");
+const { connectToDb, syncDb } = require("./config/mysqldb");
 
 // Add path to certs for https
 const server = http.createServer(app);
@@ -25,6 +25,8 @@ const { PORT = "8080" } = process.env;
 async function startServer() {
   // connect to db
   await connectToDb();
+  // sync db
+  // await syncDb();
 
   server.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`);
