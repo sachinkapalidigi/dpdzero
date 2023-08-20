@@ -107,4 +107,39 @@ In this ERD:
 ## License
 
 This project is licensed under the ISC License.
+
+
+## Alternate: Using docker and docker compose
+
+### Prerequisites
+
+1. Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
+2. Clone the repository.
+
+```bash
+git clone https://github.com/sachin-vedaraj/dpdzero.git
+```
+
+3. Navigate to the project directory.
+
+```bash
+cd dpdzero
+```
+
+4. Create an `.env` file in the root directory using the example provided in `.env.example` as a template. Replace the placeholder values with your configuration. Although not required since env variables are added in docker-compose file (WARNING: only for the local development use case) .
+
+### Running the Application with Docker Compose
+
+1. Build and start the application containers using Docker Compose.
+
+```bash
+docker-compose -f docker-compose.local.yml up --build
+```
+
+2. Access the application at `http://localhost:8080`.
+
+3. To stop the application, press `Ctrl+C` or run the following command:
+
+```bash
+docker-compose -f docker-compose.local.yml down
 ```
