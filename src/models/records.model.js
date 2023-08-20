@@ -16,7 +16,8 @@ const Record = sequelize.define(
     },
     value: {
       type: DataTypes.TEXT,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: "",
     },
   },
   {
