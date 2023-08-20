@@ -26,7 +26,7 @@ async function startServer() {
   // connect to db
   await connectToDb();
   // sync db
-  // await syncDb();
+  await syncDb();
 
   server.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`);

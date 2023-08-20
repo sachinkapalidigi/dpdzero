@@ -16,18 +16,15 @@ const sequelize = new Sequelize(DATABASE, USERNAME, PASSWORD, {
 });
 
 const connectToDb = async function () {
-  try {
-    await sequelize.authenticate();
-    console.log("Successfully connected to database");
-  } catch (error) {
-    console.log("Error connecting to database: " + error);
-  }
+  console.log("Connecting to database");
+  await sequelize.authenticate();
+  console.log("Successfully connected to database");
 };
 
 // USE sequelize-cli instead of this
-const syncDb = async function () {
+const syncDb = async function (alter = false) {
   try {
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ alter });
     console.log("Database synchronized successfully.");
   } catch (error) {
     console.error("Error synchronizing the database:", error);

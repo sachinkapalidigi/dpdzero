@@ -5,7 +5,7 @@ const { createUser } = require("./register.validation");
 
 const registerRouter = express.Router();
 
-registerRouter.get(
+registerRouter.post(
   "/",
   requestValidator(createUser.schema, "body", createUser.errorHandler),
   httpCreateUser
