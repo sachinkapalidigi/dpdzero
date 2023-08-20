@@ -99,13 +99,6 @@ In this ERD:
 - The numbers `1` and `n` represent the cardinality of the relationship. One user can have many records, but each record can only belong to one user.
 
 
-## Author
-
-- **sachin-vedaraj** - [GitHub](https://github.com/sachinkapalidigi)
-
-## License
-
-This project is licensed under the ISC License.
 
 
 ## Alternate: Using docker and docker compose
@@ -142,3 +135,11 @@ docker-compose -f docker-compose.local.yml up --build
 ```bash
 docker-compose -f docker-compose.local.yml down
 ```
+
+## Author
+
+- **Sachin Vedaraj** - [GitHub](https://github.com/sachinkapalidigi)
+
+## License
+
+This project is licensed under the ISC License.
