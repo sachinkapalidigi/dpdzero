@@ -1,4 +1,3 @@
-```markdown
 # DPDZERO
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
@@ -117,7 +116,7 @@ This project is licensed under the ISC License.
 2. Clone the repository.
 
 ```bash
-git clone https://github.com/sachin-vedaraj/dpdzero.git
+git clone https://github.com/sachinkapalidigi/dpdzero.git
 ```
 
 3. Navigate to the project directory.
@@ -126,7 +125,7 @@ git clone https://github.com/sachin-vedaraj/dpdzero.git
 cd dpdzero
 ```
 
-4. Create an `.env` file in the root directory using the example provided in `.env.example` as a template. Replace the placeholder values with your configuration. Although not required since env variables are added in docker-compose file (WARNING: only for the local development use case) .
+4. Create an `.env` file in the root directory using the example provided in `.env.example` as a template. Replace the placeholder values with your configuration. Although not required since env variables are added in docker-compose file (<span style="color:red">WARNING</span>: only for the local development use case).
 
 ### Running the Application with Docker Compose
 
