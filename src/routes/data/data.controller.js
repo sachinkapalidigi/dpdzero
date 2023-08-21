@@ -30,7 +30,7 @@ const httpStoreData = catchAsync(async (req, res) => {
     throw new AppError(status, code, message, 400);
   }
 
-  return res.status(200).json({
+  return res.status(201).json({
     ...STORE_SUCCESSFULL,
   });
 });
