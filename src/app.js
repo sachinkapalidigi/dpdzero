@@ -11,6 +11,9 @@ const apiV1 = require("./routes/apis");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./middlewares/globalErrorHandler");
 const ip = require("./middlewares/extractIp");
+const {
+  GENERAL_RESPONSE: { ROUTE_NOT_FOUND },
+} = require("./constants/generalResponse");
 
 const app = express();
 
@@ -52,8 +55,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/api", apiV1);
 
 app.all("*", (req, res, next) => {
+  const { status, code, message } = ROUTE_NOT_FOUND;
   // if arg passed to next it will assume there was an error
-  next(new AppError(`Cant't find ${req.originalUrl} on this server!`, 404));
+  next(new AppError(status, code, message, 404));
 });
 
 app.use(globalErrorHandler);
