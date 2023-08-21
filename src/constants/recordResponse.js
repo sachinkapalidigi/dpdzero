@@ -28,7 +28,7 @@ const RECORD_RESPONSE = {
     status: "error",
     code: "KEY_EXISTS",
     message:
-      " The provided key already exists in the database. To update an existing key, use ",
+      "The provided key already exists in the database. To update an existing key, use the update API.",
   },
   KEY_NOT_FOUND: {
     status: "error",

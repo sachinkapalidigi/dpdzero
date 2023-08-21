@@ -59,7 +59,7 @@ const LOGIN_RESPONSE = {
   INVALID_TOKEN: {
     status: "error",
     code: "INVALID_TOKEN",
-    message: "Invalid access token provided",
+    message: "Invalid access token provided.",
   },
   TOKEN_EXPIRED: {
     status: "error",
