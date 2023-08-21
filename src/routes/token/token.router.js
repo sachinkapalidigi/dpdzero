@@ -5,7 +5,7 @@ const { httpGetToken } = require("./token.controller");
 
 const tokenRouter = express.Router();
 
-tokenRouter.get(
+tokenRouter.post(
   "/",
   requestValidator(signIn.schema, "body", signIn.errorHandler),
   httpGetToken
