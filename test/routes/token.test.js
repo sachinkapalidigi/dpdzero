@@ -16,12 +16,12 @@ describe("verifies token generation flow with actual mysql connection", () => {
     gender: "male",
   };
 
-  const registerUser = () =>
+  const registerUser = (requestBody) =>
     new Promise((resolve, reject) => {
       chai
         .request(server)
         .post("/api/register")
-        .send(registerBody)
+        .send(requestBody)
         .end((err, res) => {
           if (err) reject(err);
           resolve(res);
@@ -29,7 +29,7 @@ describe("verifies token generation flow with actual mysql connection", () => {
     });
 
   it("Generate token successfully", (done) => {
-    registerUser().then((registerResponse) => {
+    registerUser(registerBody).then(() => {
       chai
         .request(server)
         .post("/api/token")
