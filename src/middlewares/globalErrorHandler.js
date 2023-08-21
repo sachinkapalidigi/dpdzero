@@ -53,7 +53,10 @@ const globalErrorHandler = (err, req, res, next) => {
   err.code = err.code || "INTERNAL_SERVER_ERROR";
   if (process.env.NODE_ENV === "development") {
     sendErrorForDev(err, res);
-  } else if (process.env.NODE_ENV === "production") {
+  } else if (
+    process.env.NODE_ENV === "production" ||
+    process.env.NODE_ENV === "test"
+  ) {
     let error = {
       ...err,
       message: err.message, // spread doesn't copy inherited properties
