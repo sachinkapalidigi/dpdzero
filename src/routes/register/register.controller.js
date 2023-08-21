@@ -24,7 +24,7 @@ const httpCreateUser = catchAsync(async (req, res) => {
     }
 
     const { status, code, message } = errorType;
-    throw new AppError(status, code, message, 404);
+    throw new AppError(status, code, message, 400);
   }
 
   const hashedPassword = hashPassword(password);

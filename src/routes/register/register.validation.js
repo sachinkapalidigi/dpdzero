@@ -39,7 +39,11 @@ const createUserSchemaErrorHandler = (error) => {
       response = INVALID_REQUEST;
       break;
     case `"password"`:
-      response = INVALID_PASSWORD;
+      if (error && error._original && !error._original.password) {
+        response = INVALID_REQUEST;
+      } else {
+        response = INVALID_PASSWORD;
+      }
       break;
     case `"age"`:
       response = INVALID_AGE;
