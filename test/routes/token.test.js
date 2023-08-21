@@ -16,37 +16,37 @@ describe("verifies token generation flow with actual mysql connection", () => {
     gender: "male",
   };
 
-  const registerUser = (requestBody) =>
-    new Promise((resolve, reject) => {
-      chai
-        .request(server)
-        .post("/api/register")
-        .send(requestBody)
-        .end((err, res) => {
-          if (err) reject(err);
-          resolve(res);
-        });
-    });
+  beforeEach((done) => {
+    chai
+      .request(server)
+      .post("/api/register")
+      .send(registerBody)
+      .end((err, res) => {
+        done();
+      });
+  });
 
   it("Generate token successfully", (done) => {
-    registerUser(registerBody).then(() => {
-      chai
-        .request(server)
-        .post("/api/token")
-        .send({
-          username: registerBody.username,
-          password: registerBody.password,
-        })
-        .end((err, res) => {
-          expect(res.status).equal(200);
-          expect(res.body.message).to.equal(
-            "Access token generated successfully."
-          );
-          expect(res.body).to.have.property("data");
-          expect(res.body.data).to.have.property("access_token");
-          expect(res.body.data).to.have.property("expires_in");
-          done();
-        });
-    });
+    chai
+      .request(server)
+      .post("/api/token")
+      .send({
+        username: registerBody.username,
+        password: registerBody.password,
+      })
+      .end((err, res) => {
+        expect(res.status).equal(200);
+        expect(res.body.message).to.equal(
+          "Access token generated successfully."
+        );
+        expect(res.body).to.have.property("data");
+        expect(res.body.data).to.have.property("access_token");
+        expect(res.body.data).to.have.property("expires_in");
+        done();
+      });
   });
+
+  // TODO: Generate token error: Invalid username
+
+  // TODO: Generate token error: Invalid password
 });
