@@ -6,12 +6,18 @@ A Node.js application using Express, MySQL, and Sequelize for a take-home assign
 
 ## Table of Contents
 
-1. [Setup](#setup)
-2. [Usage](#usage)
-3. [Frameworks and Libraries](#frameworks-and-libraries)
-4. [Database Schema](#database-schema)
-5. [Contributing](#contributing)
-6. [Author](#author)
+- [DPDZERO](#dpdzero)
+  - [Table of Contents](#table-of-contents)
+  - [Setup](#setup)
+  - [Usage](#usage)
+  - [Frameworks and Libraries](#frameworks-and-libraries)
+  - [Database Schema](#database-schema)
+  - [Testing](#testing)
+  - [Alternate: Using docker and docker compose](#alternate-using-docker-and-docker-compose)
+    - [Prerequisites](#prerequisites)
+    - [Running the Application with Docker Compose](#running-the-application-with-docker-compose)
+  - [Author](#author)
+  - [License](#license)
 
 ## Setup
 
@@ -98,7 +104,10 @@ In this ERD:
 - The arrow (`----------`) represents a one-to-many relationship from the `user` table to the `record` table.
 - The numbers `1` and `n` represent the cardinality of the relationship. One user can have many records, but each record can only belong to one user.
 
+## Testing
 
+- **MySQL must be up and running**
+- `npm run test` will run the tests.
 
 
 ## Alternate: Using docker and docker compose
